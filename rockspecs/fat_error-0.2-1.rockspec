@@ -1,8 +1,8 @@
 package = "fat_error"
 version = "0.2-1"
 source = {
-   url = "https://github.com/henry4k/fat_error/archive/v0.2.0.tar.gz",
-   dir = "fat_error-0.2.0"
+   url = "https://github.com/henry4k/fat_error/archive/v0.2.tar.gz",
+   dir = "fat_error-0.2"
 }
 description = {
    summary = "Replace error messages with error objects that store metadata.",

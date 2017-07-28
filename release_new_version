@@ -16,11 +16,10 @@ luarocks lint $new_rockspec
 cd ..
 echo -n "Generated '$new_rockspec' from '$old_rockspec'.  Press return to continue ..." && read
 
+git add rockspecs/$new_rockspec
 git commit -m "Updated to $new_version"
 git tag v$new_version
 git push
 git push --tags
 
-cd rockspecs
-luarocks upload $new_rockspec
-cd ..
+luarocks upload rockspecs/$new_rockspec
