@@ -14,6 +14,8 @@ Furthermore one can print the error to multiple destinations: A colored version
 for the terminal, a colorless version for the log file, or even aggregate it in
 a database for later processing/analysis.
 
+![](screenshot.png)
+
 
 Example
 -------
@@ -149,12 +151,17 @@ position.  Goes from 1 to `nparams`.
 This may be `nil`.
 
 
-#### Constructor `Frame([thread,] level)`
+#### Constructor `Frame(thread, level)`
 
 Creates a new `Frame` object from the function running at the given stack
 level.
 
 The thread defaults to the currently running one.
+
+
+#### Static function `.trace(thread, level[, max_level])`
+
+Collects stack frames starting at the given level.
 
 
 #### Method `:get_parameters()`

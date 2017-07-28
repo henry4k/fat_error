@@ -6,7 +6,7 @@ local colors =
 {
     reset         = code('reset'),
     message       = code('bright'),
-    unimportant   = code('dim'),
+    unimportant   = code('dim', 'white'),
     location      = code(),
     key           = code('green'),
     nil_type      = code('red'),
@@ -64,9 +64,9 @@ local function Writer(o)
 
     if not frame_prefix then
         if head_location == 'bottom' then
-            frame_prefix = '  ↱ '
+            frame_prefix = '    ↱ '
         else
-            frame_prefix = '  ↳ '
+            frame_prefix = '    ↳ '
         end
     end
 
@@ -192,9 +192,9 @@ local function Writer(o)
         local t = type(var.value)
         if show_origin and
             var.origin and
-            (t == 'function' or t == 'userdata') then
+            (t == 'function' or t == 'userdata' or t == 'table') then
             write(c.unimportant, t, ' ', reset)
-            write(c[t..'_type'], var.origin, reset)
+            write(c.key, var.origin, reset)
         else
             write_value(var.value)
         end
@@ -202,7 +202,7 @@ local function Writer(o)
 
     local function write_function_parameters(f)
         write(c.unimportant, '(', reset)
-        for i, param in ipairs(f.parameters) do
+        for i, param in ipairs(f:get_parameters()) do
             if i > 1 then
                 write(c.unimportant, ', ', reset)
             end
@@ -212,7 +212,7 @@ local function Writer(o)
     end
 
     local function write_other_variables(f)
-        for name, var in pairs(f.named_variables) do
+        for name, var in pairs(f:get_named_variables()) do
             if not var.parameter_index and not name:match'^_' then
                 write(aux_line_prefix)
                 write_variable(var)

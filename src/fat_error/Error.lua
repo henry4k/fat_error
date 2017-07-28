@@ -14,7 +14,7 @@ end
 
 function Error:trace_back(level)
     assert(not self.frames, 'Has already a stack trace.')
-    local ok, frames = pcall(Frame.trace, level+1)
+    local ok, frames = pcall(Frame.trace, coroutine.running(), level+1)
     if not ok then
         io.stderr:write('INTERNAL ERROR:', frames, '\n')
     end
@@ -25,7 +25,7 @@ local function is_error(value)
     return getmetatable(value) == Error
 end
 
-local function Error(message, parent)
+local function new_error(message, parent)
     assert(type(message) == 'string')
 
     -- To be able to rethrow regular error messages:
@@ -40,4 +40,4 @@ local function Error(message, parent)
 end
 
 return setmetatable({is_instance = is_error},
-                    {__call = function(_, ...) return Error(...) end})
+                    {__call = function(_, ...) return new_error(...) end})

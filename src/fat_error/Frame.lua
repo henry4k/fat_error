@@ -106,11 +106,6 @@ local function add_upvalues(frame)
 end
 
 local function new_frame(thread, level)
-    if not level then -- if no thread has been given
-        level = thread
-        thread = coroutine.running()
-    end
-
     local frame = debug.getinfo(thread, level+1, 'nSltufL')
     if not frame then return end
 
@@ -176,9 +171,10 @@ local function gather_value_origins(frames)
 end
 
 local function trace_frames(thread, level, max_level)
+    max_level = max_level or math.huge
     local frames = {}
     local i = 1
-    while not max_level or i <= max_level do
+    while i <= max_level do
         local frame = new_frame(thread, level+i)
         if not frame then break end
         frames[i] = frame
