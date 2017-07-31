@@ -43,14 +43,10 @@ local function add_variable(frame, v)
 
     if v.name then
         if v.is_upvalue then
-            assert(not frame._upvalues[v.name])
             frame._upvalues[v.name] = v
         else
-            assert(not frame._locals[v.name])
             frame._locals[v.name] = v
         end
-
-        assert(not frame._named_variables[v.name])
         frame._named_variables[v.name] = v
     end
 end
@@ -115,9 +111,10 @@ local function new_frame(thread, level)
     frame._named_variables = {}
     frame._variables = {}
 
+    -- sort by ascending priority:
+    add_upvalues(frame)
     add_locals(frame, thread, level+1)
     add_var_args(frame, thread, level+1)
-    add_upvalues(frame)
 
     return setmetatable(frame, Frame)
 end
