@@ -19,7 +19,8 @@ echo -n "Generated '$new_rockspec' from '$old_rockspec'.  Press return to contin
 git add rockspecs/$new_rockspec
 git commit -m "Updated to $new_version"
 git tag v$new_version
+
+echo -n "Prepare for uploading data.  Press return to continue ..." && read
 git push
 git push --tags
-
 luarocks upload rockspecs/$new_rockspec
