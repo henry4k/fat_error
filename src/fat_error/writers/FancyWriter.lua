@@ -230,9 +230,10 @@ local function Writer(o)
 
         write_location(f)
 
-        write_function_name(f)
-        if show_variables == 'parameters' or
-           show_variables == 'all' then
+        if f.name or
+           #f:get_parameters() > 0 and
+           (show_variables == 'parameters' or show_variables == 'all') then
+            write_function_name(f)
             write_function_parameters(f)
         end
 
