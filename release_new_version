@@ -6,21 +6,21 @@ function luarocks
     luarocks-5.2 $@
 }
 
-new_version=$1
+new_version="$1"
 
 cd rockspecs
 old_rockspec="$(ls -c | head -n 1)"
-luarocks new_version $old_rockspec $new_version
+luarocks new_version "$old_rockspec" "$new_version"
 new_rockspec="$(ls -c | head -n 1)"
-luarocks lint $new_rockspec
+luarocks lint "$new_rockspec"
 cd ..
 echo -n "Generated '$new_rockspec' from '$old_rockspec'.  Press return to continue ..." && read
 
-git add rockspecs/$new_rockspec
+git add "rockspecs/$new_rockspec"
 git commit -m "Updated to $new_version"
-git tag v$new_version
+git tag "v$new_version"
 
 echo -n "Prepare for uploading data.  Press return to continue ..." && read
 git push
 git push --tags
-luarocks upload rockspecs/$new_rockspec
+luarocks upload "rockspecs/$new_rockspec"

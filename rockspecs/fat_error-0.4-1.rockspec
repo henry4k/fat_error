@@ -16,7 +16,7 @@ a database for later processing/analysis.]],
    license = "MIT"
 }
 dependencies = {
-   "lua >= 5.1, < 5.4"
+   "lua >= 5.2, < 5.4"
 }
 build = {
    type = "builtin",
