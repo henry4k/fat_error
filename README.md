@@ -103,15 +103,17 @@ As errors are propagated implicitly the function only returns yielded values.
 
 It has these properties:
 
-- `message`
+- `description`: A value which describes the error - not necessarily a string.
+- `message`: The string representation of the error description.
+(Obtained using `tostring`)
 - `parent`: `Error` object that caused this one to be raised.
 - `frames`: List of `Frame` objects that describe the threads stack when the
 error occured.
 
 
-#### Constructor `Error(message[, parent])`
+#### Constructor `Error(description[, parent])`
 
-Creates a new `Error` object with the given message.
+Creates a new `Error` object with the given description.
 
 You can chain errors by using the `parent` argument.
 
